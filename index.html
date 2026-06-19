@@ -1,0 +1,1174 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bir Söz — казахский язык внутри браузера</title>
+        <meta
+            name="description"
+            content="Браузерное расширение, которое превращает обычный интернет в среду для практики казахского языка."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Space+Mono:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="favicon-16x16.png"
+        />
+        <style>
+            :root {
+                --dark: #1c1610;
+                --dark-deep: #14100c;
+                --paper: #f2ebdc;
+                --paper-card: #faf6ee;
+                --ink: #1a1612;
+                --ink-soft: #4a4338;
+                --ink-faded: #7a7060;
+                --cream: #faf6ee;
+                --cream-faded: rgba(250, 246, 238, 0.6);
+                --accent: #e88e3e;
+                --accent-deep: #c46e22;
+                --green: #6fae6f;
+                --rule: rgba(26, 22, 18, 0.18);
+                --rule-soft: rgba(26, 22, 18, 0.08);
+                --rule-dark: rgba(232, 142, 62, 0.22);
+                --display: "Montserrat", sans-serif;
+                --mono: "Space Mono", ui-monospace, monospace;
+            }
+
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                background: var(--paper);
+                color: var(--ink);
+                font-family: var(--display);
+                font-weight: 400;
+                font-size: 17px;
+                line-height: 1.5;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            .wrap {
+                max-width: 1080px;
+                margin: 0 auto;
+                padding: 0 32px;
+            }
+            a {
+                color: inherit;
+            }
+
+            /* ===== DARK SECTION BASE ===== */
+            .dark-section {
+                background: var(--dark);
+                color: var(--cream);
+                position: relative;
+                overflow: hidden;
+            }
+
+            .grain {
+                position: absolute;
+                inset: 0;
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.035 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+                pointer-events: none;
+            }
+
+            .glow {
+                position: absolute;
+                inset: 0;
+                background-image:
+                    radial-gradient(
+                        circle at 12% 18%,
+                        rgba(232, 142, 62, 0.16) 0%,
+                        transparent 35%
+                    ),
+                    radial-gradient(
+                        circle at 88% 78%,
+                        rgba(232, 142, 62, 0.1) 0%,
+                        transparent 40%
+                    );
+                pointer-events: none;
+            }
+
+            /* ===== NAV ===== */
+            nav {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 28px 0;
+            }
+
+            .logo {
+                font-family: var(--display);
+                font-size: 16px;
+                font-weight: 800;
+                letter-spacing: -0.01em;
+                color: var(--accent);
+            }
+            .dark-section .logo {
+                color: var(--accent);
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 32px;
+                list-style: none;
+                font-family: var(--mono);
+                font-size: 12px;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: var(--cream-faded);
+            }
+            .nav-links a {
+                text-decoration: none;
+                transition: color 0.15s;
+            }
+            .nav-links a:hover {
+                color: var(--accent);
+            }
+
+            /* ===== HERO ===== */
+            .hero {
+                position: relative;
+                padding: 56px 0 110px;
+                display: grid;
+                grid-template-columns: 1.1fr 0.9fr;
+                gap: 48px;
+                align-items: center;
+            }
+
+            .word-float {
+                position: absolute;
+                font-family: var(--mono);
+                font-size: 12px;
+                color: rgba(232, 142, 62, 0.4);
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                animation: floaty 6s ease-in-out infinite;
+                pointer-events: none;
+            }
+            .w1 {
+                top: 6%;
+                left: 2%;
+                animation-delay: 0s;
+            }
+            .w2 {
+                top: 18%;
+                right: 4%;
+                animation-delay: 1.2s;
+            }
+            .w3 {
+                bottom: 10%;
+                left: 6%;
+                animation-delay: 2.4s;
+            }
+            .w4 {
+                top: 48%;
+                left: -2%;
+                animation-delay: 3.4s;
+            }
+
+            @keyframes floaty {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                    opacity: 0.4;
+                }
+                50% {
+                    transform: translateY(-10px);
+                    opacity: 0.7;
+                }
+            }
+
+            .eyebrow {
+                font-family: var(--mono);
+                font-size: 12px;
+                letter-spacing: 0.22em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 22px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+            .eyebrow::before {
+                content: "";
+                width: 24px;
+                height: 1px;
+                background: var(--accent);
+            }
+
+            h1 {
+                font-family: var(--display);
+                font-size: 62px;
+                font-weight: 900;
+                letter-spacing: -0.025em;
+                line-height: 0.98;
+                margin-bottom: 26px;
+            }
+
+            h1 .accent-fill {
+                color: var(--accent);
+            }
+            h1 .outline {
+                -webkit-text-stroke: 1.5px var(--accent);
+                color: transparent;
+            }
+
+            .hero-sub {
+                font-family: var(--mono);
+                font-size: 15px;
+                color: var(--cream-faded);
+                max-width: 420px;
+                margin-bottom: 36px;
+                line-height: 1.65;
+            }
+
+            .cta-row {
+                display: flex;
+                gap: 14px;
+                flex-wrap: wrap;
+            }
+
+            .btn {
+                font-family: var(--mono);
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                padding: 16px 28px;
+                border: none;
+                cursor: pointer;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                transition:
+                    transform 0.18s ease,
+                    box-shadow 0.18s ease;
+            }
+
+            .btn-primary {
+                background: var(--accent);
+                color: var(--dark);
+            }
+            .btn-primary:hover {
+                transform: translate(-2px, -2px);
+                box-shadow: 4px 4px 0 rgba(232, 142, 62, 0.4);
+            }
+
+            .btn-ghost {
+                background: transparent;
+                color: var(--accent);
+                border: 1px solid var(--rule-dark);
+            }
+            .btn-ghost:hover {
+                border-color: var(--accent);
+            }
+
+            .btn-ghost.light {
+                color: var(--accent-deep);
+                border-color: var(--rule);
+            }
+            .btn-ghost.light:hover {
+                border-color: var(--accent-deep);
+            }
+
+            /* hero card */
+            .card-pop {
+                position: relative;
+                width: 250px;
+                margin-left: auto;
+                background: var(--cream);
+                padding: 1.5rem;
+                border: 2px solid var(--dark);
+                box-shadow: 9px 9px 0 var(--accent);
+                transform: rotate(2deg);
+                animation: cardIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s
+                    backwards;
+            }
+
+            @keyframes cardIn {
+                from {
+                    opacity: 0;
+                    transform: rotate(2deg) scale(0.85);
+                }
+                to {
+                    opacity: 1;
+                    transform: rotate(2deg) scale(1);
+                }
+            }
+
+            .card-topline {
+                display: flex;
+                justify-content: space-between;
+                font-family: var(--mono);
+                font-size: 10px;
+                letter-spacing: 0.1em;
+                text-transform: uppercase;
+                color: var(--ink-faded);
+                margin-bottom: 14px;
+            }
+            .card-topline span:first-child {
+                color: var(--accent-deep);
+            }
+
+            .card-word {
+                font-family: var(--display);
+                font-weight: 800;
+                font-size: 32px;
+                color: var(--ink);
+                margin-bottom: 6px;
+                letter-spacing: -0.01em;
+            }
+
+            .card-prompt {
+                font-family: var(--mono);
+                font-size: 11px;
+                color: var(--ink-soft);
+                margin-bottom: 14px;
+            }
+
+            .card-rule {
+                height: 1px;
+                background: var(--rule);
+                margin-bottom: 12px;
+            }
+            .card-options {
+                display: flex;
+                flex-direction: column;
+                gap: 2px;
+            }
+            .card-option {
+                padding: 7px 0 7px 10px;
+                border-left: 2px solid transparent;
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--ink);
+            }
+            .card-option.correct {
+                color: #3d7a45;
+                border-left-color: #3d7a45;
+                background: rgba(61, 122, 69, 0.08);
+            }
+
+            /* ===== SECTION HEADERS ===== */
+            .section {
+                padding: 90px 0;
+            }
+            .section.light {
+                border-top: 1px solid var(--rule-soft);
+            }
+            .section.dark-section {
+                border-top: 1px solid var(--rule-dark);
+            }
+
+            .section-eyebrow {
+                font-family: var(--mono);
+                font-size: 12px;
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 16px;
+            }
+            .dark-section .section-eyebrow {
+                color: var(--accent);
+            }
+            .light .section-eyebrow {
+                color: var(--accent-deep);
+            }
+
+            .section-title {
+                font-family: var(--display);
+                font-size: 36px;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+                max-width: 620px;
+                margin-bottom: 18px;
+                line-height: 1.08;
+            }
+
+            .section-sub {
+                font-family: var(--mono);
+                font-size: 14.5px;
+                max-width: 520px;
+                line-height: 1.6;
+            }
+            .dark-section .section-sub {
+                color: var(--cream-faded);
+            }
+            .light .section-sub {
+                color: var(--ink-soft);
+            }
+
+            .mission-copy {
+                margin-top: 38px;
+                max-width: 760px;
+            }
+
+            .mission-copy p {
+                font-family: var(--mono);
+                color: var(--cream-faded);
+                font-size: 15px;
+                line-height: 1.65;
+            }
+
+            .mission-copy p + p {
+                margin-top: 16px;
+            }
+
+            /* ===== FEATURES (dark) ===== */
+            .features {
+                position: relative;
+                margin-top: 56px;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                border-top: 1px solid var(--rule-dark);
+                border-left: 1px solid var(--rule-dark);
+            }
+
+            .feature {
+                padding: 32px 28px;
+                border-right: 1px solid var(--rule-dark);
+                border-bottom: 1px solid var(--rule-dark);
+                transition: background 0.2s ease;
+            }
+            .feature:hover {
+                background: rgba(232, 142, 62, 0.05);
+            }
+
+            .feature-mark {
+                font-family: var(--mono);
+                font-size: 11px;
+                color: var(--accent);
+                margin-bottom: 18px;
+            }
+
+            .feature h3 {
+                font-family: var(--display);
+                font-size: 19px;
+                font-weight: 700;
+                margin-bottom: 10px;
+                color: var(--cream);
+            }
+
+            .feature p {
+                font-family: var(--mono);
+                color: var(--cream-faded);
+                font-size: 13.5px;
+                line-height: 1.6;
+            }
+
+            /* ===== HOW IT WORKS (light) ===== */
+            .steps {
+                margin-top: 56px;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                position: relative;
+            }
+
+            .step {
+                padding: 0 24px 0 0;
+                position: relative;
+            }
+
+            .step:not(:last-child)::after {
+                content: "→";
+                position: absolute;
+                right: -2px;
+                top: 6px;
+                color: var(--accent);
+                font-size: 18px;
+            }
+
+            .step-num {
+                font-family: var(--mono);
+                font-size: 11px;
+                color: var(--accent-deep);
+                letter-spacing: 0.08em;
+                margin-bottom: 14px;
+            }
+
+            .step h4 {
+                font-family: var(--display);
+                font-size: 17px;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+
+            .step p {
+                font-family: var(--mono);
+                color: var(--ink-soft);
+                font-size: 13px;
+                line-height: 1.55;
+            }
+
+            /* ===== INSTALL (light) ===== */
+            .install-block {
+                background: var(--paper-card);
+                border: 1px solid var(--ink);
+                box-shadow: 8px 8px 0 var(--accent);
+                padding: 52px;
+                margin-top: 56px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 48px;
+            }
+
+            .install-note {
+                font-family: var(--mono);
+                color: var(--ink-soft);
+                font-size: 13.5px;
+                max-width: 660px;
+                margin-top: 18px;
+                line-height: 1.6;
+            }
+
+            .install-col h3 {
+                font-family: var(--mono);
+                font-size: 12px;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--accent-deep);
+                margin-bottom: 14px;
+            }
+
+            .install-col p {
+                font-family: var(--mono);
+                color: var(--ink-soft);
+                font-size: 13.5px;
+                margin-bottom: 20px;
+                line-height: 1.6;
+            }
+
+            .install-steps {
+                font-family: var(--mono);
+                font-size: 12.5px;
+                color: var(--ink);
+                background: var(--paper);
+                border: 1px solid var(--rule);
+                padding: 16px 18px;
+                margin-bottom: 20px;
+            }
+            .install-steps div {
+                padding: 4px 0;
+            }
+            .install-steps div span {
+                color: var(--accent-deep);
+                margin-right: 8px;
+            }
+            .install-guide {
+                display: none;
+                margin-top: 28px;
+                background: var(--paper-card);
+                border: 1px solid var(--ink);
+                padding: 28px;
+            }
+            .install-guide.is-visible {
+                display: block;
+            }
+            .install-guide h3 {
+                font-family: var(--display);
+                font-size: 22px;
+                margin-bottom: 12px;
+            }
+            .install-guide p {
+                font-family: var(--mono);
+                color: var(--ink-soft);
+                font-size: 13px;
+                line-height: 1.6;
+                margin-bottom: 18px;
+            }
+            .install-guide ol {
+                display: grid;
+                gap: 12px;
+                list-style: decimal-leading-zero;
+                padding-left: 28px;
+                font-family: var(--mono);
+                font-size: 13px;
+                line-height: 1.55;
+            }
+            .install-guide li::marker {
+                color: var(--accent-deep);
+                font-weight: 700;
+            }
+            .install-guide strong {
+                color: var(--ink);
+                font-family: var(--display);
+                font-weight: 700;
+            }
+            .install-guide code {
+                background: var(--paper);
+                border: 1px solid var(--rule);
+                padding: 1px 5px;
+                font-family: var(--mono);
+                font-size: 12px;
+            }
+
+            .email-form {
+                display: flex;
+                border: 1px solid var(--ink);
+            }
+            .email-form input {
+                flex: 1;
+                border: none;
+                background: var(--paper-card);
+                padding: 14px 16px;
+                font-family: var(--display);
+                font-size: 14px;
+                color: var(--ink);
+            }
+            .email-form input:focus {
+                outline: none;
+            }
+            .email-form input::placeholder {
+                color: var(--ink-faded);
+            }
+            .email-form button {
+                border: none;
+                background: var(--accent);
+                color: var(--dark);
+                font-family: var(--mono);
+                font-size: 11px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                padding: 0 22px;
+                cursor: pointer;
+            }
+            .email-form button:hover {
+                background: var(--accent-deep);
+            }
+            .email-form button:disabled {
+                cursor: wait;
+                opacity: 0.72;
+            }
+            .form-status {
+                min-height: 20px;
+                margin-top: 10px;
+                font-family: var(--mono);
+                font-size: 12px;
+                color: var(--ink-soft);
+            }
+            .form-status.error {
+                color: #9d3328;
+            }
+            .form-status.success {
+                color: #3d7a45;
+            }
+
+            /* ===== FOOTER (dark) ===== */
+            footer {
+                position: relative;
+                padding: 40px 0;
+            }
+            .footer-inner {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                gap: 36px;
+                position: relative;
+            }
+            .footer-meta {
+                font-family: var(--mono);
+                font-size: 11px;
+                color: var(--cream-faded);
+                letter-spacing: 0.04em;
+                white-space: nowrap;
+            }
+            .footer-contact {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 18px;
+                flex-wrap: wrap;
+                font-family: var(--mono);
+                font-size: 11px;
+                color: var(--cream-faded);
+                min-width: 0;
+            }
+            .footer-contact a {
+                color: var(--accent);
+                text-decoration: none;
+            }
+            .footer-contact a:hover {
+                text-decoration: underline;
+            }
+
+            /* ===== RESPONSIVE ===== */
+            @media (max-width: 880px) {
+                .hero {
+                    grid-template-columns: 1fr;
+                    gap: 40px;
+                }
+                h1 {
+                    font-size: 42px;
+                }
+                .card-pop {
+                    margin-left: 0;
+                }
+                .features {
+                    grid-template-columns: 1fr;
+                }
+                .steps {
+                    grid-template-columns: 1fr 1fr;
+                    gap: 32px 0;
+                }
+                .step:nth-child(2)::after {
+                    display: none;
+                }
+                .pricing {
+                    grid-template-columns: 1fr;
+                }
+                .install-block {
+                    grid-template-columns: 1fr;
+                    padding: 32px 24px;
+                    box-shadow: 5px 5px 0 var(--accent);
+                }
+                .install-guide {
+                    padding: 24px 20px;
+                }
+                .nav-links {
+                    display: none;
+                }
+                .footer-inner {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 18px;
+                }
+                .footer-contact {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 6px;
+                }
+                .footer-meta {
+                    white-space: normal;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <section class="dark-section">
+            <div class="grain"></div>
+            <div class="glow"></div>
+            <div class="wrap">
+                <nav>
+                    <span class="logo">Bir Söz</span>
+                    <ul class="nav-links">
+                        <li><a href="#features">Возможности</a></li>
+                        <li><a href="#how">Как это работает</a></li>
+                        <li><a href="#community">Миссия</a></li>
+                        <li><a href="#install">Установить</a></li>
+                    </ul>
+                </nav>
+
+                <section class="hero">
+                    <span class="word-float w1">otbasy</span>
+                    <span class="word-float w2">сәлем</span>
+                    <span class="word-float w3">rakhmet</span>
+                    <span class="word-float w4">jaqsy</span>
+
+                    <div>
+                        <p class="eyebrow">Расширение для Браузера</p>
+                        <h1>
+                            Қазақ тілі<br /><span class="accent-fill"
+                                >живет</span
+                            >
+                            в твоем<br /><span class="outline">браузере</span>
+                        </h1>
+                        <p class="hero-sub">
+                            Bir Söz встраивает практику казахского в сайты,
+                            которые ты и так открываешь каждый день. Без
+                            приложения, без расписания. Язык находит тебя сам.
+                        </p>
+                        <div class="cta-row">
+                            <a href="#install" class="btn btn-primary"
+                                >Установить →</a
+                            >
+                            <a href="#how" class="btn btn-ghost"
+                                >Как это работает</a
+                            >
+                        </div>
+                    </div>
+
+                    <div class="card-pop">
+                        <div class="card-topline">
+                            <span>Перевод</span><span>söz 1</span>
+                        </div>
+                        <div class="card-word">семья</div>
+                        <p class="card-prompt">
+                            Qazaq tilindegi audarmany tañdañyz
+                        </p>
+                        <div class="card-rule"></div>
+                        <div class="card-options">
+                            <div class="card-option">jaman</div>
+                            <div class="card-option correct">otbasy</div>
+                            <div class="card-option">üstel</div>
+                            <div class="card-option">uaqyt</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </section>
+
+        <section class="section dark-section" id="features">
+            <div class="grain"></div>
+            <div class="glow"></div>
+            <div class="wrap">
+                <p class="section-eyebrow">Почему мы</p>
+                <h2 class="section-title">
+                    Языковая среда — это не приложение, которое нужно открыть.
+                    Это то, что окружает тебя без усилий.
+                </h2>
+                <p class="section-sub">
+                    Курсы заканчиваются — практика должна продолжаться. Bir Söz
+                    решает это там, где ты уже проводишь время: в браузере.
+                </p>
+
+                <div class="features">
+                    <div class="feature">
+                        <p class="feature-mark">01</p>
+                        <h3>Учи на любом сайте</h3>
+                        <p>
+                            Слово появляется прямо поверх страницы, которую ты
+                            читаешь — будь то госуслуги, новости или почта.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <p class="feature-mark">02</p>
+                        <h3>Умное повторение</h3>
+                        <p>
+                            Интеллектуальная система интервальных повторений
+                            отслеживает, какие слова даются легко, а какие —
+                            нет, и подстраивает частоту показа.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <p class="feature-mark">03</p>
+                        <h3>Ритм и прогресс</h3>
+                        <p>
+                            Прогресс показывает серию дней подряд, количество
+                            освоенных слов и динамику.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <p class="feature-mark">04</p>
+                        <h3>Свои словари</h3>
+                        <p>
+                            Выбирай наборы по уровню и теме: от базовых слов до
+                            повседневной и расширенной лексики. Если не
+                            достаточно, можно создать свой.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <p class="feature-mark">05</p>
+                        <h3>Контроль нагрузки</h3>
+                        <p>
+                            Настраиваемый интервал между заданиями и режим «не
+                            беспокоить».
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <p class="feature-mark">06</p>
+                        <h3>Без лишнего</h3>
+                        <p>
+                            Никаких аккаунтов и тяжёлых интерфейсов. Один клик —
+                            и казахский уже в браузере.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section light" id="how">
+            <div class="wrap">
+                <p class="section-eyebrow">Как это работает</p>
+                <h2 class="section-title">
+                    От установки до первого выученного слова — меньше минуты. И
+                    еще меньше усилий
+                </h2>
+
+                <div class="steps">
+                    <div class="step">
+                        <p class="step-num">шаг 01</p>
+                        <h4>Установи расширение</h4>
+                        <p>Один клик в Chrome — без регистрации.</p>
+                    </div>
+                    <div class="step">
+                        <p class="step-num">шаг 02</p>
+                        <h4>Выбери словарь</h4>
+                        <p>
+                            Набор под твой уровень и тему — базовая,
+                            повседневная или расширенная лексика.
+                        </p>
+                    </div>
+                    <div class="step">
+                        <p class="step-num">шаг 03</p>
+                        <h4>Продолжай пользоваться браузером</h4>
+                        <p>Карточка появится сама, когда придёт время.</p>
+                    </div>
+                    <div class="step">
+                        <p class="step-num">шаг 04</p>
+                        <h4>Смотри прогресс</h4>
+                        <p>
+                            Страница прогресса считает серию дней и освоенные
+                            слова.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section dark-section" id="community">
+            <div class="grain"></div>
+            <div class="glow"></div>
+            <div class="wrap">
+                <p class="section-eyebrow">Миссия</p>
+                <h2 class="section-title">
+                    Казахская языковая среда в браузере за одну установку
+                </h2>
+                <p class="section-sub">
+                    Bir Söz (Бір сөз) помогает изучать казахский язык не через
+                    отдельные занятия, а во время обычной работы и повседневного
+                    использования интернета.
+                </p>
+
+                <div class="mission-copy">
+                    <p>
+                        Язык легко забывается, когда исчезает из повседневной
+                        среды. Bir Söz возвращает казахский туда, где вы уже
+                        проводите время: в браузер.
+                    </p>
+                    <p>
+                        Наша цель — сделать контакт с языком регулярным, лёгким
+                        и незаметным. Не ещё одно приложение, а маленькая
+                        практика внутри обычного интернета.
+                    </p>
+                    <p>
+                        Мы улучшаем словари, повторения, прогресс и
+                        персонализацию. Фокус один: больше живого контакта с
+                        казахским без лишней нагрузки.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section light" id="install">
+            <div class="wrap">
+                <p class="section-eyebrow">Установка</p>
+                <h2 class="section-title">
+                    Мы ждём публикации в Chrome Web Store
+                </h2>
+                <p class="install-note">
+                    Оставь почту, и мы напишем, когда Bir Söz появится в
+                    магазине. Расширение уже можно использовать полностью:
+                    скачай архив и установи его вручную в Chrome.
+                </p>
+
+                <div class="install-block">
+                    <div class="install-col">
+                        <h3>Ждать Chrome Web Store</h3>
+                        <p>
+                            Это самый простой путь: оставь email, и мы пришлём
+                            короткое письмо, когда расширение пройдёт модерацию
+                            и появится в магазине.
+                        </p>
+                        <form class="email-form" data-demo-request-form>
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="you@mail.kz"
+                                required
+                            />
+                            <button type="submit">Сообщить</button>
+                        </form>
+                        <p
+                            class="form-status"
+                            data-demo-request-status
+                            aria-live="polite"
+                        ></p>
+                    </div>
+                    <div class="install-col">
+                        <h3>Использовать уже сейчас</h3>
+                        <p>
+                            Скачай zip-архив с расширением. После клика ниже
+                            появится подробная инструкция по установке вручную.
+                        </p>
+                        <a
+                            href="dist.zip"
+                            download
+                            class="btn btn-ghost light"
+                            data-download-extension
+                            aria-controls="manualInstallInstructions"
+                            >Скачать расширение</a
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="install-guide"
+                    id="manualInstallInstructions"
+                    aria-live="polite"
+                >
+                    <h3>Как установить Bir Söz вручную</h3>
+                    <p>
+                        Это нужно сделать один раз. После установки расширение
+                        будет работать как обычное Chrome-расширение.
+                    </p>
+                    <ol>
+                        <li>
+                            Нажми <strong>Скачать расширение</strong> и дождись
+                            загрузки файла <code>dist.zip</code>.
+                        </li>
+                        <li>Открой папку загрузок на компьютере.</li>
+                        <li>Найди файл <code>dist.zip</code>.</li>
+                        <li>
+                            Распакуй архив: на macOS дважды кликни по файлу, на
+                            Windows выбери <strong>Извлечь всё</strong>.
+                        </li>
+                        <li>
+                            Открой распакованную папку и найди внутри файлы
+                            расширения. Правильная папка содержит много файлов,
+                            включая <code>manifest.json</code>.
+                        </li>
+                        <li>Открой Chrome.</li>
+                        <li>
+                            В адресной строке введи
+                            <code>chrome://extensions</code> и нажми Enter.
+                        </li>
+                        <li>
+                            В правом верхнем углу включи
+                            <strong>Режим разработчика</strong>.
+                        </li>
+                        <li>
+                            Нажми кнопку
+                            <strong>Загрузить распакованное расширение</strong>.
+                        </li>
+                        <li>
+                            Выбери папку, внутри которой лежит
+                            <code>manifest.json</code>. На Windows после
+                            <strong>Извлечь всё</strong> иногда появляется папка
+                            внутри папки, поэтому не выбирай внешний пустой
+                            уровень.
+                        </li>
+                        <li>
+                            Нажми <strong>Выбрать</strong> или
+                            <strong>Открыть</strong>.
+                        </li>
+                        <li>
+                            Проверь, что карточка Bir Söz появилась на странице
+                            расширений и переключатель рядом с ней включён.
+                        </li>
+                        <li>
+                            Открой любой сайт в новой вкладке и начинай
+                            пользоваться расширением.
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <footer class="dark-section">
+            <div class="grain"></div>
+            <div class="wrap footer-inner">
+                <span class="logo">Bir Söz</span>
+                <span class="footer-contact">
+                    <span>По любым вопросам</span>
+                    <a href="https://t.me/ivanlukov">Telegram @ivanlukov</a>
+                    <a href="mailto:ivan@ivanlukov.com">ivan@ivanlukov.com</a>
+                </span>
+                <span class="footer-meta">2026 · сделано на хакатоне</span>
+            </div>
+        </footer>
+
+        <script>
+            const demoRequestForm = document.querySelector(
+                "[data-demo-request-form]",
+            );
+            const demoRequestStatus = document.querySelector(
+                "[data-demo-request-status]",
+            );
+            const demoRequestEndpoint =
+                "https://api.lukivan8.com/api/demo-requests";
+            const downloadExtensionLink = document.querySelector(
+                "[data-download-extension]",
+            );
+            const manualInstallInstructions = document.querySelector(
+                "#manualInstallInstructions",
+            );
+
+            downloadExtensionLink?.addEventListener("click", () => {
+                manualInstallInstructions?.classList.add("is-visible");
+                downloadExtensionLink.textContent = "Скачиваем...";
+
+                window.setTimeout(() => {
+                    downloadExtensionLink.textContent = "Скачать расширение";
+                    manualInstallInstructions?.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                }, 250);
+            });
+
+            demoRequestForm?.addEventListener("submit", async (event) => {
+                event.preventDefault();
+
+                const form = event.currentTarget;
+                const input = form.elements.email;
+                const button = form.querySelector("button");
+                const email = input.value.trim();
+                const originalButtonText = button.textContent;
+
+                if (!email) return;
+
+                button.disabled = true;
+                button.textContent = "Отправляем...";
+                demoRequestStatus.textContent = "";
+                demoRequestStatus.className = "form-status";
+
+                try {
+                    const body = new URLSearchParams({ email });
+
+                    await fetch(demoRequestEndpoint, {
+                        method: "POST",
+                        mode: "no-cors",
+                        headers: {
+                            "content-type": "application/x-www-form-urlencoded",
+                        },
+                        body,
+                    });
+
+                    form.reset();
+                    button.textContent = "Спасибо!";
+                    demoRequestStatus.textContent =
+                        "Готово, пришлем ссылку после публикации.";
+                    demoRequestStatus.classList.add("success");
+                } catch {
+                    button.textContent = originalButtonText;
+                    demoRequestStatus.textContent =
+                        "Не получилось отправить почту. Попробуй еще раз.";
+                    demoRequestStatus.classList.add("error");
+                } finally {
+                    button.disabled = false;
+                }
+            });
+        </script>
+    </body>
+</html>
