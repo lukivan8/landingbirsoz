@@ -606,6 +606,12 @@
                 padding: 16px 18px;
                 margin-bottom: 20px;
             }
+            .install-steps strong {
+                display: block;
+                font-family: var(--display);
+                font-size: 17px;
+                margin-bottom: 8px;
+            }
             .install-steps div {
                 padding: 4px 0;
             }
@@ -626,6 +632,7 @@
             .install-guide h3 {
                 font-family: var(--display);
                 font-size: 22px;
+                line-height: 1.15;
                 margin-bottom: 12px;
             }
             .install-guide p {
@@ -634,6 +641,30 @@
                 font-size: 13px;
                 line-height: 1.6;
                 margin-bottom: 18px;
+            }
+            .install-guide .install-details-title {
+                color: var(--ink);
+                font-family: var(--display);
+                font-size: 16px;
+                font-weight: 700;
+                margin-bottom: 12px;
+            }
+            .install-guide details {
+                border-top: 1px solid var(--rule);
+                padding-top: 16px;
+            }
+            .install-guide summary {
+                cursor: pointer;
+                color: var(--ink);
+                font-family: var(--display);
+                font-size: 16px;
+                font-weight: 700;
+            }
+            .install-guide summary::marker {
+                color: var(--accent-deep);
+            }
+            .install-guide details[open] summary {
+                margin-bottom: 16px;
             }
             .install-guide ol {
                 display: grid;
@@ -666,6 +697,28 @@
                 padding: 1px 5px;
                 font-family: var(--mono);
                 font-size: 12px;
+            }
+            .install-troubleshooting {
+                margin-top: 24px;
+            }
+            .install-troubleshooting p {
+                margin-bottom: 14px;
+            }
+            .install-troubleshooting figure {
+                margin: 0;
+            }
+            .install-troubleshooting img {
+                display: block;
+                width: 100%;
+                max-width: 707px;
+                border: 1px solid var(--rule);
+            }
+            .install-troubleshooting figcaption {
+                font-family: var(--mono);
+                color: var(--ink-soft);
+                font-size: 12px;
+                line-height: 1.55;
+                margin-top: 8px;
             }
 
             .email-form {
@@ -1099,12 +1152,29 @@
                     id="manualInstallInstructions"
                     aria-live="polite"
                 >
-                    <h3>Как установить Bir Söz вручную</h3>
+                    <h3>
+                        До публикации в Chrome Web Store установка занимает около
+                        1 минуты. После публикации достаточно будет одного клика.
+                    </h3>
                     <p>
-                        Это нужно сделать один раз. После установки расширение
-                        будет работать как обычное Chrome-расширение.
+                        Сейчас это временный способ установки. После установки
+                        расширение будет работать как обычное Chrome-расширение.
                     </p>
-                    <ol>
+                    <div class="install-steps" aria-label="Три шага установки">
+                        <strong>Всего 3 шага</strong>
+                        <div><span>01</span>Скачать архив</div>
+                        <div>
+                            <span>02</span>Открыть
+                            <code>chrome://extensions</code>
+                        </div>
+                        <div>
+                            <span>03</span>Загрузить распакованную папку в
+                            режиме разработчика
+                        </div>
+                    </div>
+                    <details class="install-instructions">
+                        <summary>Подробная инструкция</summary>
+                        <ol>
                         <li>
                             Нажми <strong>Скачать расширение</strong> и дождись
                             загрузки файла <code>birsoz-extension.zip</code>.
@@ -1157,7 +1227,28 @@
                             периодически будут всплывать задания на казахском
                             языке.
                         </li>
-                    </ol>
+                        </ol>
+                    </details>
+                    <details class="install-troubleshooting">
+                        <summary>Возможные проблемы</summary>
+                        <p>
+                            Если Chrome пишет, что не удалось загрузить
+                            манифест, скорее всего, выбрана внешняя папка,
+                            внутри которой лежит ещё одна папка с расширением.
+                            Выбери вложенную папку, где находится файл
+                            <code>manifest.json</code>, как в пункте 10.
+                        </p>
+                        <figure>
+                            <img
+                                src="chrome-folder-in-folder-error.png"
+                                alt="Ошибка Chrome: файл манифеста отсутствует или недоступен для чтения"
+                            />
+                            <figcaption>
+                                Такая ошибка возникает, если загрузить в Chrome
+                                папку, внутри которой лежит папка расширения.
+                            </figcaption>
+                        </figure>
+                    </details>
                 </div>
             </div>
         </section>
