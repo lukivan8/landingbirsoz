@@ -1184,6 +1184,8 @@
             );
             const demoRequestEndpoint =
                 "https://api.lukivan8.com/api/demo-requests";
+            const landingEventEndpoint = "https://api.lukivan8.com/api/landing";
+            const clientIdStorageKey = "birsoz_landing_client_id";
             const downloadExtensionLink = document.querySelector(
                 "[data-download-extension]",
             );
@@ -1191,7 +1193,47 @@
                 "#manualInstallInstructions",
             );
 
+            const getClientId = () => {
+                const clientId =
+                    window.crypto?.randomUUID?.() ||
+                    `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+                try {
+                    const existingClientId = window.localStorage.getItem(
+                        clientIdStorageKey,
+                    );
+
+                    if (existingClientId) return existingClientId;
+
+                    window.localStorage.setItem(clientIdStorageKey, clientId);
+                } catch {
+                    return clientId;
+                }
+
+                return clientId;
+            };
+
+            const trackLandingEvent = (eventType = "landing") => {
+                const body = new URLSearchParams({
+                    client_id: getClientId(),
+                    event_type: eventType,
+                });
+
+                fetch(landingEventEndpoint, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: {
+                        "content-type": "application/x-www-form-urlencoded",
+                    },
+                    body,
+                    keepalive: true,
+                }).catch(() => {});
+            };
+
+            trackLandingEvent();
+
             downloadExtensionLink?.addEventListener("click", () => {
+                trackLandingEvent("download");
                 manualInstallInstructions?.classList.add("is-visible");
                 downloadExtensionLink.textContent = "Скачиваем...";
 
@@ -1221,7 +1263,10 @@
                 demoRequestStatus.className = "form-status";
 
                 try {
-                    const body = new URLSearchParams({ email });
+                    const body = new URLSearchParams({
+                        email,
+                        client_id: getClientId(),
+                    });
 
                     await fetch(demoRequestEndpoint, {
                         method: "POST",
