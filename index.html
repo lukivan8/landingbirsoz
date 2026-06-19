@@ -609,6 +609,13 @@
                 color: var(--accent-deep);
                 font-weight: 700;
             }
+
+            .install-guide .install-done {
+                margin-top: 8px;
+                padding: 14px 16px;
+                border: 1px solid var(--accent-deep);
+                background: rgba(232, 142, 62, 0.12);
+            }
             .install-guide strong {
                 color: var(--ink);
                 font-family: var(--display);
@@ -997,7 +1004,7 @@
                                 placeholder="you@mail.kz"
                                 required
                             />
-                            <button type="submit">Сообщить</button>
+                            <button type="submit">Сообщите мне</button>
                         </form>
                         <p
                             class="form-status"
@@ -1012,7 +1019,7 @@
                             появится подробная инструкция по установке вручную.
                         </p>
                         <a
-                            href="dist.zip"
+                            href="birsoz-extension.zip"
                             download
                             class="btn btn-ghost light"
                             data-download-extension
@@ -1035,23 +1042,26 @@
                     <ol>
                         <li>
                             Нажми <strong>Скачать расширение</strong> и дождись
-                            загрузки файла <code>dist.zip</code>.
+                            загрузки файла <code>birsoz-extension.zip</code>.
                         </li>
                         <li>Открой папку загрузок на компьютере.</li>
-                        <li>Найди файл <code>dist.zip</code>.</li>
+                        <li>Найди файл <code>birsoz-extension.zip</code>.</li>
                         <li>
                             Распакуй архив: на macOS дважды кликни по файлу, на
                             Windows выбери <strong>Извлечь всё</strong>.
                         </li>
                         <li>
-                            Открой распакованную папку и найди внутри файлы
-                            расширения. Правильная папка содержит много файлов,
-                            включая <code>manifest.json</code>.
+                            Открой распакованную папку и убедись, что внутри есть
+                            файлы расширения. С ними ничего делать не нужно:
+                            правильная папка содержит много файлов, включая
+                            <code>manifest.json</code>.
                         </li>
                         <li>Открой Chrome.</li>
                         <li>
-                            В адресной строке введи
-                            <code>chrome://extensions</code> и нажми Enter.
+                            Открой меню Chrome и нажми
+                            <strong>Расширения</strong>, затем
+                            <strong>Управление расширениями</strong>. Или введи
+                            <code>chrome://extensions</code> в адресной строке.
                         </li>
                         <li>
                             В правом верхнем углу включи
@@ -1076,9 +1086,11 @@
                             Проверь, что карточка Bir Söz появилась на странице
                             расширений и переключатель рядом с ней включён.
                         </li>
-                        <li>
-                            Открой любой сайт в новой вкладке и начинай
-                            пользоваться расширением.
+                        <li class="install-done">
+                            <strong>Готово.</strong> Дальше ничего делать не
+                            нужно. Просто пользуйся браузером как обычно:
+                            периодически будут всплывать задания на казахском
+                            языке.
                         </li>
                     </ol>
                 </div>
