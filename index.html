@@ -535,7 +535,7 @@
                 padding: 52px;
                 margin-top: 56px;
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr;
                 gap: 48px;
             }
 
@@ -841,9 +841,6 @@
                     padding: 32px 24px;
                     box-shadow: 5px 5px 0 var(--accent);
                 }
-                .install-guide {
-                    padding: 24px 20px;
-                }
                 .nav-links {
                     display: none;
                 }
@@ -904,7 +901,11 @@
                             приложения, без расписания. Язык находит тебя сам.
                         </p>
                         <div class="cta-row">
-                            <a href="#install" class="btn btn-primary"
+                            <a
+                                href="https://chromewebstore.google.com/detail/bir-s%C3%B6z/jiinpggkdcpidhanigfbgbkhjfhfhnld?authuser=0&amp;hl=en-GB"
+                                class="btn btn-primary"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 >Установить →</a
                             >
                             <a href="#how" class="btn btn-ghost"
@@ -1014,7 +1015,10 @@
                     <div class="step">
                         <p class="step-num">шаг 01</p>
                         <h4>Установи расширение</h4>
-                        <p>Один клик в Chrome — без регистрации.</p>
+                        <p>
+                            Один клик из официального магазина — без
+                            регистрации.
+                        </p>
                     </div>
                     <div class="step">
                         <p class="step-num">шаг 02</p>
@@ -1079,51 +1083,28 @@
             <div class="wrap">
                 <p class="section-eyebrow">Установка</p>
                 <h2 class="section-title">
-                    Мы ждём публикации в Chrome Web Store
+                    Bir Söz доступен в официальном магазине
                 </h2>
                 <p class="install-note">
-                    Оставь почту, и мы напишем, когда Bir Söz появится в
-                    магазине. Расширение уже можно использовать полностью:
-                    скачай архив и установи его вручную в Chrome.
+                    Установи расширение в один клик и практикуй казахский прямо
+                    в браузере. Оно работает в Chrome, Edge, Brave, Opera и
+                    других браузерах на базе Chromium; Safari и Firefox пока не
+                    поддерживаются.
                 </p>
 
                 <div class="install-block">
                     <div class="install-col">
-                        <h3>Ждать Chrome Web Store</h3>
+                        <h3>Расширение уже доступно</h3>
                         <p>
-                            Это самый простой путь: оставь email, и мы пришлём
-                            короткое письмо, когда расширение пройдёт модерацию
-                            и появится в магазине.
-                        </p>
-                        <form class="email-form" data-demo-request-form>
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="you@mail.kz"
-                                required
-                            />
-                            <button type="submit">Сообщите мне</button>
-                        </form>
-                        <p
-                            class="form-status"
-                            data-demo-request-status
-                            aria-live="polite"
-                        ></p>
-                    </div>
-                    <div class="install-col">
-                        <h3>Использовать уже сейчас</h3>
-                        <p>
-                            Скачай zip-архив с расширением. После клика ниже
-                            появится подробная инструкция по установке вручную.
+                            Начни практиковать казахский прямо в браузере.
                         </p>
                         <div class="install-actions">
                             <a
-                                href="birsoz-extension.zip"
-                                download
+                                href="https://chromewebstore.google.com/detail/bir-s%C3%B6z/jiinpggkdcpidhanigfbgbkhjfhfhnld?authuser=0&amp;hl=en-GB"
                                 class="btn btn-ghost light"
-                                data-download-extension
-                                aria-controls="manualInstallInstructions"
-                                >Скачать расширение</a
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                >Добавить в браузер</a
                             >
                             <a
                                 href="https://github.com/lukivan8/bir-suz/releases/tag/0.1.0"
@@ -1146,110 +1127,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div
-                    class="install-guide"
-                    id="manualInstallInstructions"
-                    aria-live="polite"
-                >
-                    <h3>
-                        До публикации в Chrome Web Store установка занимает около
-                        1 минуты. После публикации достаточно будет одного клика.
-                    </h3>
-                    <p>
-                        Сейчас это временный способ установки. После установки
-                        расширение будет работать как обычное Chrome-расширение.
-                    </p>
-                    <div class="install-steps" aria-label="Три шага установки">
-                        <strong>Всего 3 шага</strong>
-                        <div><span>01</span>Скачать архив</div>
-                        <div>
-                            <span>02</span>Открыть
-                            <code>chrome://extensions</code>
-                        </div>
-                        <div>
-                            <span>03</span>Загрузить распакованную папку в
-                            режиме разработчика
-                        </div>
-                    </div>
-                    <details class="install-instructions">
-                        <summary>Подробная инструкция</summary>
-                        <ol>
-                        <li>
-                            Нажми <strong>Скачать расширение</strong> и дождись
-                            загрузки файла <code>birsoz-extension.zip</code>.
-                        </li>
-                        <li>Открой папку загрузок на компьютере.</li>
-                        <li>Найди файл <code>birsoz-extension.zip</code>.</li>
-                        <li>
-                            Распакуй архив: на macOS дважды кликни по файлу, на
-                            Windows выбери <strong>Извлечь всё</strong>.
-                        </li>
-                        <li>
-                            Открой распакованную папку и убедись, что внутри есть
-                            файлы расширения. С ними ничего делать не нужно:
-                            правильная папка содержит много файлов, включая
-                            <code>manifest.json</code>.
-                        </li>
-                        <li>Открой Chrome.</li>
-                        <li>
-                            Открой меню Chrome и нажми
-                            <strong>Расширения</strong>, затем
-                            <strong>Управление расширениями</strong>. Или введи
-                            <code>chrome://extensions</code> в адресной строке.
-                        </li>
-                        <li>
-                            В правом верхнем углу включи
-                            <strong>Режим разработчика</strong>.
-                        </li>
-                        <li>
-                            Нажми кнопку
-                            <strong>Загрузить распакованное расширение</strong>.
-                        </li>
-                        <li>
-                            Выбери папку, внутри которой лежит
-                            <code>manifest.json</code>. На Windows после
-                            <strong>Извлечь всё</strong> иногда появляется папка
-                            внутри папки, поэтому не выбирай внешний пустой
-                            уровень.
-                        </li>
-                        <li>
-                            Нажми <strong>Выбрать</strong> или
-                            <strong>Открыть</strong>.
-                        </li>
-                        <li>
-                            Проверь, что карточка Bir Söz появилась на странице
-                            расширений и переключатель рядом с ней включён.
-                        </li>
-                        <li class="install-done">
-                            <strong>Готово.</strong> Дальше ничего делать не
-                            нужно. Просто пользуйся браузером как обычно:
-                            периодически будут всплывать задания на казахском
-                            языке.
-                        </li>
-                        </ol>
-                    </details>
-                    <details class="install-troubleshooting">
-                        <summary>Возможные проблемы</summary>
-                        <p>
-                            Если Chrome пишет, что не удалось загрузить
-                            манифест, скорее всего, выбрана внешняя папка,
-                            внутри которой лежит ещё одна папка с расширением.
-                            Выбери вложенную папку, где находится файл
-                            <code>manifest.json</code>, как в пункте 10.
-                        </p>
-                        <figure>
-                            <img
-                                src="chrome-folder-in-folder-error.png"
-                                alt="Ошибка Chrome: файл манифеста отсутствует или недоступен для чтения"
-                            />
-                            <figcaption>
-                                Такая ошибка возникает, если загрузить в Chrome
-                                папку, внутри которой лежит папка расширения.
-                            </figcaption>
-                        </figure>
-                    </details>
-                </div>
             </div>
         </section>
 
@@ -1267,22 +1144,8 @@
         </footer>
 
         <script>
-            const demoRequestForm = document.querySelector(
-                "[data-demo-request-form]",
-            );
-            const demoRequestStatus = document.querySelector(
-                "[data-demo-request-status]",
-            );
-            const demoRequestEndpoint =
-                "https://api.lukivan8.com/api/demo-requests";
             const landingEventEndpoint = "https://api.lukivan8.com/api/landing";
             const clientIdStorageKey = "birsoz_landing_client_id";
-            const downloadExtensionLink = document.querySelector(
-                "[data-download-extension]",
-            );
-            const manualInstallInstructions = document.querySelector(
-                "#manualInstallInstructions",
-            );
 
             const getClientId = () => {
                 const clientId =
@@ -1323,65 +1186,6 @@
 
             trackLandingEvent();
 
-            downloadExtensionLink?.addEventListener("click", () => {
-                trackLandingEvent("download");
-                manualInstallInstructions?.classList.add("is-visible");
-                downloadExtensionLink.textContent = "Скачиваем...";
-
-                window.setTimeout(() => {
-                    downloadExtensionLink.textContent = "Скачать расширение";
-                    manualInstallInstructions?.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                    });
-                }, 250);
-            });
-
-            demoRequestForm?.addEventListener("submit", async (event) => {
-                event.preventDefault();
-
-                const form = event.currentTarget;
-                const input = form.elements.email;
-                const button = form.querySelector("button");
-                const email = input.value.trim();
-                const originalButtonText = button.textContent;
-
-                if (!email) return;
-
-                button.disabled = true;
-                button.textContent = "Отправляем...";
-                demoRequestStatus.textContent = "";
-                demoRequestStatus.className = "form-status";
-
-                try {
-                    const body = new URLSearchParams({
-                        email,
-                        client_id: getClientId(),
-                    });
-
-                    await fetch(demoRequestEndpoint, {
-                        method: "POST",
-                        mode: "no-cors",
-                        headers: {
-                            "content-type": "application/x-www-form-urlencoded",
-                        },
-                        body,
-                    });
-
-                    form.reset();
-                    button.textContent = "Спасибо!";
-                    demoRequestStatus.textContent =
-                        "Готово, пришлем ссылку после публикации.";
-                    demoRequestStatus.classList.add("success");
-                } catch {
-                    button.textContent = originalButtonText;
-                    demoRequestStatus.textContent =
-                        "Не получилось отправить почту. Попробуй еще раз.";
-                    demoRequestStatus.classList.add("error");
-                } finally {
-                    button.disabled = false;
-                }
-            });
         </script>
     </body>
 </html>
