@@ -9,11 +9,23 @@ Browser → www.birsoz.kz (Vercel) → api.lukivan8.com (Cloudflare) → Tunnel 
 
 These are server-side rewrites, not browser redirects. The original API origin,
 DNS, tunnel, payloads and URLs remain available to existing extensions. The site
-HTML and existing downloads are unchanged. Administrative routes are not proxied.
+HTML and existing downloads are unchanged. The authenticated dashboard, its nested assets/forms/export routes, login/logout and privacy page are also proxied. Administrative `/api/` routes remain available only at the original API origin.
 
-All `/api/*` responses bypass Vercel rewrite caching, with no-store headers.
+All `/api/*`, dashboard, login/logout and privacy responses bypass Vercel rewrite caching, with no-store headers.
 Organization-specific catalog requests must retain X-Bir-Organization-Code;
 conditional catalog requests must retain If-None-Match and the upstream ETag.
+
+## Dashboard
+
+Open https://www.birsoz.kz/dashboard. The backend requires the existing team
+account and accepts the exact https://www.birsoz.kz Origin alongside its original
+origin. Requests with missing/untrusted Origin are still rejected for writes.
+The proxy preserves relative redirects, cookies, form bodies and HTMX headers.
+Host-only Secure/HttpOnly/SameSite=Strict cookies keep each domain's login separate.
+The original https://api.lukivan8.com/dashboard remains available.
+
+Before reverting the backend origin allowlist, roll back these dashboard rewrites
+to avoid presenting a login form that cannot submit through the new domain.
 
 ## Future extension integration
 
