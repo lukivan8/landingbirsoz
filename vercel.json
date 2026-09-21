@@ -1,0 +1,64 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/api",
+      "destination": "https://api.lukivan8.com/api"
+    },
+    {
+      "source": "/api/health",
+      "destination": "https://api.lukivan8.com/api/health"
+    },
+    {
+      "source": "/api/v1/vocabularies",
+      "destination": "https://api.lukivan8.com/api/v1/vocabularies"
+    },
+    {
+      "source": "/api/v1/organization/connect",
+      "destination": "https://api.lukivan8.com/api/v1/organization/connect"
+    },
+    {
+      "source": "/api/v1/analytics/events/batch",
+      "destination": "https://api.lukivan8.com/api/v1/analytics/events/batch"
+    },
+    {
+      "source": "/api/events",
+      "destination": "https://api.lukivan8.com/api/events"
+    },
+    {
+      "source": "/api/snapshot",
+      "destination": "https://api.lukivan8.com/api/snapshot"
+    },
+    {
+      "source": "/api/landing",
+      "destination": "https://api.lukivan8.com/api/landing"
+    },
+    {
+      "source": "/api/demo-requests",
+      "destination": "https://api.lukivan8.com/api/demo-requests"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "x-vercel-enable-rewrite-caching",
+          "value": "0"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "Vercel-CDN-Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ]
+}
